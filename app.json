@@ -1,0 +1,12 @@
+{
+  "name": "flash-cards",
+  "displayName": "flash-cards",
+  "expo": {
+    "name": "flash-cards",
+    "slug": "expo-template-bare",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
