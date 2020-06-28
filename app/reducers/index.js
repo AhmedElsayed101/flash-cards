@@ -1,11 +1,22 @@
-import {ADD_DECK, REMOVE_DECK, ADD_CARD} from '../actions/index'
-import { act } from 'react-test-renderer'
-
+import {ADD_DECK, REMOVE_DECK, ADD_CARD,
+        GET_DECK, GET_DECKS, getDeck } from '../actions/index'
 
 export default function decks (state = {}, action){
 
     console.log('action', action)
     switch (action.type){
+
+        case GET_DECKS :
+            return {
+                ...state,
+                ...action.decks
+            }
+        
+        case GET_DECK:
+            return {
+                ...state,
+                ...action.deck
+            }
 
         case ADD_DECK :
             return{
