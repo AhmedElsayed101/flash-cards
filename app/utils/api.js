@@ -1,17 +1,21 @@
 import {AsyncStorage} from 'react-native'
+import decks from '../reducers'
 
 export const DEKCS_STORAGE_KEY = 'secret'
 
-export function getDecks () {
-    return JSON.parse(AsyncStorage.getItem(DEKCS_STORAGE_KEY))
+export async function getDecksAPI () {
+    const result = JSON.parse(await AsyncStorage.getItem(DEKCS_STORAGE_KEY))
+    console.log('results', result)
+    return result
 }
 
-export function getDeck(id) {
-    decks = getDecks()
+export async function getDeckAPI(id) {
+    const decks = await getDecksAPI()
+    console.log('decks', decks)
     return decks[id]
 }
 
-export function addDeck (id) {
+export function addDeckAPI (id) {
 
     return AsyncStorage.mergeItem(
         DEKCS_STORAGE_KEY,
@@ -24,21 +28,25 @@ export function addDeck (id) {
     )
 }
 
-export function removeDeck(id) {
-    const decks = getDecks()
-    const deckToRemove = decks[id]
-    deckToRemove = undefined
-    delete deckToRemove
+export async function removeDeckAPI(id) {
+    const decks = await getDecksAPI()
+    const deckId = id
+    const { [deckId] : value , ...withoutId } = decks;
+    // const deckToRemove = decks[id]
+    // deckToRemove = undefined
+    // delete deckToRemove
     AsyncStorage.setItem(
         DEKCS_STORAGE_KEY,
-        JSON.stringify(decks)
+        JSON.stringify(withoutId)
     )
 
 
 }
 
-export function addCard (id, card) {
-    const deck = getDeck(id)
+export async function addCardAPI (id, card) {
+    console.log('card', card)
+    const deck = await getDeckAPI(id)
+    console.log('deck', deck)
     deck.cards.push(card)
     return AsyncStorage.mergeItem(
         DEKCS_STORAGE_KEY,
@@ -47,3 +55,7 @@ export function addCard (id, card) {
         })
     )
 }
+
+// export async function removeApi () {
+//     return await AsyncStorage.removeItem(DEKCS_STORAGE_KEY)
+// }

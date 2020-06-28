@@ -4,7 +4,14 @@ export const ADD_CARD = 'ADD_CARD'
 
 
 
-export function addDeck (deck){
+export function addDeck (id){
+    // console.log('action')
+    const deck = {
+        [id] : {
+            id,
+            cards : []
+        }
+    }
     return {
         type : ADD_DECK,
         deck
@@ -18,7 +25,9 @@ export function removeDeck (id) {
     }
 }
 
-export function addCard (card, id){
+export function addCard (allData){
+    const {id, card} = allData
+    console.log(allData)
     return {
         type: ADD_CARD,
         card,
