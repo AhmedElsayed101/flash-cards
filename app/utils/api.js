@@ -5,13 +5,13 @@ export const DEKCS_STORAGE_KEY = 'secret'
 
 export async function getDecksAPI () {
     const result = JSON.parse(await AsyncStorage.getItem(DEKCS_STORAGE_KEY))
-    console.log('results', result)
+    // console.log('results', result)
     return result
 }
 
 export async function getDeckAPI(id) {
     const decks = await getDecksAPI()
-    console.log('decks', decks)
+    // console.log('decks', decks)
     return decks[id]
 }
 

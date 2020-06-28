@@ -1,42 +1,53 @@
 import React, { Component } from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, Button } from "react-native";
 import { connect } from "react-redux";
 import { addCard,addDeck,removeDeck } from "../actions/index";
 
-import { addCardAPI,addDeckAPI,removeDeckAPI,getDeckAPI,getDecksAPI,} from "../utils/api";
+import { getDecksAPI,} from "../utils/api";
 // import decks from "../reducers";
 
 import Deck from './decks/Deck'
+import NewDeck from './decks/NewDeck'
+
+import  App from "./tryNav";
 
 class Home extends Component {
+    // state = {
 
-    state = {
+    // }
 
-    }
-
+    // componentDidMount () {
+    //     getDecksAPI()
+    //         .then(results => {
+    //             this.setState(() => ({
+    //                 ...results
+    //             }))
+    //             console.log('state' ,this.state)
+    //         })
+    // }
     componentDidMount () {
-        getDecksAPI()
-            .then(results => {
-                this.setState(() => ({
-                    ...results
-                }))
-            })
-    }
-
-    render () {
-        
+        getDecksAPI().then((decks) => console.log('deck', decks))
+        this.forceUpdate();
+      }
+    
+      render() {
         return (
-            <View> 
-                <Text> Home </Text>
-            </View>
-        )
-    }
+           
+          <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+            <Text>Home Screen</Text>
+            <Button
+              title="Go to Details"
+              onPress={() => this.props.navigation.navigate(
+                'NewCard',
+                {
+                  itemId: 86,
+                  otherParam: 'anything you want here',
+                }
+              )}
+            />
+          </View>
+        );
+      }
 }
 
-function mapStateToProps (state) {
-    return{
-        state
-    }
-}
-
-export default connect(mapStateToProps)(Home)
+export default Home
