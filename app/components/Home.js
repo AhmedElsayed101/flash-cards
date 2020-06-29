@@ -3,7 +3,7 @@ import { View, Text, Button,FlatList,TouchableOpacity, StyleSheet, ScrollView} f
 import { connect } from "react-redux";
 // import { addCard,addDeck,removeDeck } from "../actions/index";
 
-import { getDecksAPI,} from "../utils/api";
+import { getDecksAPI,removeApi} from "../utils/api";
 import Deck from './decks/Deck'
 
 class Home extends Component {
@@ -42,17 +42,12 @@ class Home extends Component {
                     title="Refresh"
                     onPress={this.refresh}
                 />      
-                <Text>Home Screen</Text>
+                <Text>Please refresh to load the new decks</Text>
                 <Button
-                    title="Go to Details"
-                    onPress={() => this.props.navigation.navigate(
-                    'NewCard',
-                    {
-                        itemId: 86,
-                        otherParam: 'anything you want here',
-                    }
-                    )}
+                    title="Remove all Decks"
+                    onPress={() => removeApi()}
                 />
+                <Text>You will need to restart the app</Text>
                 <ScrollView>
                     {Object.keys(currentState).map((deck) => {
                         console.log('key',currentState[deck])

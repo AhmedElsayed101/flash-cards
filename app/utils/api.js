@@ -58,6 +58,6 @@ export async function addCardAPI (id, card) {
     )
 }
 
-// export async function removeApi () {
-//     return await AsyncStorage.removeItem(DEKCS_STORAGE_KEY)
-// }
+export async function removeApi () {
+    return await AsyncStorage.removeItem(DEKCS_STORAGE_KEY)
+}

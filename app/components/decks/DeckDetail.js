@@ -44,14 +44,7 @@ class DeckDetail extends Component {
             }))
             console.log('state', this.state)
         })
-        // console.log('decksasssssssssssss', deck)
-        // this.setState(() => ({
-        //     deck,
-        //     toNewCardFunc
-        // }))
-        // this.setState(() => ({
-        //     length : deck.cards.length
-        // }))
+        
     }
 
     render (){
@@ -61,9 +54,9 @@ class DeckDetail extends Component {
         const {deck,length} = this.state
         console.log('desdklalflaflkaflck', length)
         return (
-                <View> 
+                <View > 
                     <Text> 
-                        DeckDetail
+                        Please refresh to load the new cards
                     </Text>
                     <Button
                         title="Refresh"
