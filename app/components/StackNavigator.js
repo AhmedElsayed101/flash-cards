@@ -44,7 +44,7 @@ class DetailsScreen extends Component {
 const AppNavigator = createStackNavigator(
   {
     Home: Home,
-    Deck : DeckDetail,
+    DeckDetail : DeckDetail,
     NewCard: NewCard, 
     QuizPage : QuizPage,
     Details: DetailsScreen,

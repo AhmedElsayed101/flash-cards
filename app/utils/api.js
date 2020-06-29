@@ -12,6 +12,8 @@ export async function getDecksAPI () {
 export async function getDeckAPI(id) {
     const decks = await getDecksAPI()
     // console.log('decks', decks)
+    console.log('id', id)
+    // console.log('apiDEc', decks[id])
     return decks[id]
 }
 

@@ -1,86 +1,44 @@
 import React from 'react';
-import { StyleSheet, View, TextInput, Button, Text, KeyboardAvoidingView } from 'react-native';
+import { connect } from "react-redux";
+import { StyleSheet, View, TextInput, Button, Text, KeyboardAvoidingView, } from 'react-native';
 import { addCardAPI, addDeckAPI,getDecksAPI } from '../../utils/api'
+import { withNavigation } from "react-navigation";
 
 class NewCard extends React.Component {
   state = {
+
     question: '',
     answer: '',
+  }
+  
+  componentDidMount() {
+
+    const { navigation } = this.props;
+    const deck = navigation.getParam('deck',) 
+    console.log('deck', deck.id)
+    this.setState(() => ({
+        deck,
+    }))
   }
   submitForm = state => {
 
     const { navigation } = this.props;
-    
+    const {question, answer, deck} = this.state    
 
     if(!state.question || !state.answer) {
       this.setState(state => ({
         ...state, 
         errorMessage: 'Your card needs a question and an answer!'
       }))
-    } 
-    // else if(this.props.navigation.state.params.deckAddCard) {
-    //   this.props.navigation.state.params.deckAddCard(
-    //     this.props.navigation.state.params.deckTitle,
-    //     { 
-    //       answer: state.answer, 
-    //       question: state.question
-    //     }
-    //   )
-    //   this.props.navigation.goBack()
-    // }
-    // const deckId = JSON.stringify(navigation.getParam('deckId', 'default value'))
-    addDeckAPI('Deck')
-    addDeckAPI('hello2')
-    addDeckAPI('hello3')
-    // const deckId = 'Deck'
-    // const card = {question : state.question , answer : state.answer}
-    // addCardAPI(deckId, card).then((e) => console.log(e))
-    // getDecksAPI()
-    //         .then(results => {
-    //             console.log('the Deck', results['Deck'])
-    //             } )
-    //         .catch((e)=> {console.log(e)})
-    // navigation.goBack()
-          
-  }
+    }
 
-  add = state => {
-
-    const { navigation } = this.props;
-    
-
-    if(!state.question || !state.answer) {
-      this.setState(state => ({
-        ...state, 
-        errorMessage: 'Your card needs a question and an answer!'
-      }))
-    } 
-    // else if(this.props.navigation.state.params.deckAddCard) {
-    //   this.props.navigation.state.params.deckAddCard(
-    //     this.props.navigation.state.params.deckTitle,
-    //     { 
-    //       answer: state.answer, 
-    //       question: state.question
-    //     }
-    //   )
-    //   this.props.navigation.goBack()
-    // }
-    // const deckId = JSON.stringify(navigation.getParam('deckId', 'default value'))
-  
-    const deckId = 'Deck'
-    const card = {question : state.question , answer : state.answer}
-    addCardAPI(deckId, card).then((e) => console.log(e))
-    getDecksAPI()
-            .then(results => {
-                console.log('the Deck', results['Deck'])
-                } )
-            .catch((e)=> {console.log(e)})
+    const card = {question : question , answer : answer}
+    console.log('deck', deck)
+    addCardAPI(deck.id, card)
     navigation.goBack()
+  
           
   }
-   
-   
-
   render() {
 
     return (
@@ -101,10 +59,10 @@ class NewCard extends React.Component {
           title='submit new card' 
           onPress={() => this.submitForm(this.state)}
         />
-         <Button 
+         {/* <Button 
           title='add new card' 
           onPress={() => this.add(this.state)}
-        />
+        /> */}
         <Text style={styles.errorMessage}>
           {this.state.errorMessage}
         </Text>
@@ -128,4 +86,11 @@ const styles = StyleSheet.create({
 })
 
 
-export default NewCard
+function mapStateToProps (state, {navigation}) {
+  return {
+      state,
+      navigation
+  }
+}
+
+export default withNavigation(connect(mapStateToProps)(NewCard)) 

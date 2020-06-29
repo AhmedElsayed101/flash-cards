@@ -1,5 +1,8 @@
 import React, {Component}from 'react';
+import { connect } from "react-redux";
+
 import { StyleSheet, View, Button, TextInput, Text, KeyboardAvoidingView} from 'react-native';
+import { addDeck } from "../../actions/index";
 import { addDeckAPI } from '../../utils/api'
 
 class NewDeck extends Component {
@@ -10,12 +13,14 @@ class NewDeck extends Component {
 
     onSubmit = (id) => {
         
-        const {navigation} = this.props; 
+        const {navigation, dispatch} = this.props; 
         console.log(id)
         if(id === '') {
             this.setState(state => ({...state, errorMessage: 'Your deck needs a title!' }))
         }
         else{
+
+            dispatch(addDeck(id))
             addDeckAPI(id)
             this.setState(()=>({
                 id : ''
@@ -77,4 +82,11 @@ const styles = StyleSheet.create({
 })
 
 
-export default NewDeck
+function mapStateToProps (state, {navigation}) {
+    return {
+        state,
+        navigation
+    }
+}
+
+export default connect(mapStateToProps)(NewDeck) 

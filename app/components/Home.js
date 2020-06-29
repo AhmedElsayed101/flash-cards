@@ -1,53 +1,100 @@
-import React, { Component } from "react";
-import { View, Text, Button } from "react-native";
+import React, { Component, useEffect } from "react";
+import { View, Text, Button,FlatList,TouchableOpacity, StyleSheet, ScrollView} from "react-native";
 import { connect } from "react-redux";
-import { addCard,addDeck,removeDeck } from "../actions/index";
+// import { addCard,addDeck,removeDeck } from "../actions/index";
 
 import { getDecksAPI,} from "../utils/api";
-// import decks from "../reducers";
-
 import Deck from './decks/Deck'
-import NewDeck from './decks/NewDeck'
-
-import  App from "./tryNav";
 
 class Home extends Component {
-    // state = {
+    state = {
 
-    // }
+    }
 
-    // componentDidMount () {
-    //     getDecksAPI()
-    //         .then(results => {
-    //             this.setState(() => ({
-    //                 ...results
-    //             }))
-    //             console.log('state' ,this.state)
-    //         })
-    // }
-    componentDidMount () {
-        getDecksAPI().then((decks) => console.log('deck', decks))
-        this.forceUpdate();
-      }
-    
-      render() {
+    componentDidMount() {
+        getDecksAPI().then((decks) => {
+            console.log('dsdfaklsflkaeck', decks)
+            this.setState(() => ({
+                ...decks
+            }))
+            console.log('state', this.state)
+        })
+    }
+
+    refresh = () => {
+        getDecksAPI().then((decks) => {
+            console.log('dsdfaklsflkaeck', decks)
+            this.setState(() => ({
+                ...decks
+            }))
+            console.log('state', this.state)
+        })
+    }
+    render() {
+        
+        const {navigate} = this.props.navigation
+        const currentState = this.state
+
         return (
-           
-          <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-            <Text>Home Screen</Text>
-            <Button
-              title="Go to Details"
-              onPress={() => this.props.navigation.navigate(
-                'NewCard',
-                {
-                  itemId: 86,
-                  otherParam: 'anything you want here',
-                }
-              )}
-            />
-          </View>
+            
+            <View style={styles.container}>   
+                <Button
+                    title="Refresh"
+                    onPress={this.refresh}
+                />      
+                <Text>Home Screen</Text>
+                <Button
+                    title="Go to Details"
+                    onPress={() => this.props.navigation.navigate(
+                    'NewCard',
+                    {
+                        itemId: 86,
+                        otherParam: 'anything you want here',
+                    }
+                    )}
+                />
+                <ScrollView>
+                    {Object.keys(currentState).map((deck) => {
+                        console.log('key',currentState[deck])
+                        return (
+                            <Deck
+                                key = {deck}
+                                deck = {currentState[deck]}
+                                deckDetail = {() => navigate(
+                                    'DeckDetail',
+                                    {  
+                                        deck: currentState[deck],
+                                        toNewCardFunc : () => navigate('NewCard', {deckId : deck})
+                                    },
+                                )}
+                            />
+                        )
+                    })}
+                </ScrollView>
+            </View>
         );
-      }
+        }
 }
 
-export default Home
+const styles = StyleSheet.create({
+    title: {
+      paddingTop: 10,
+      paddingBottom: 10,
+      fontSize: 24
+    },
+    container: {
+        flex: 1,
+        paddingTop: 40,
+        backgroundColor: '#fff',
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+})
+
+function mapStateToProps (state) {
+    return {
+        state
+    }
+}
+
+export default (connect(mapStateToProps)(Home)) 

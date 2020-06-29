@@ -1,26 +1,34 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import React, {Component} from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
 
 import { createStore } from "redux";
 import { Provider } from "react-redux";
 import reducer from "./app/reducers";
-import NewCard from "./app/components/cards/NewCard";
-import Home from "./app/components/Home";
+
 import Tabs from "./app/components/TabNavigator";
+import { setLocalNotification } from "./app/utils/helpers";
 
 
-export default function App() {
-  return (
-    <Provider store = {createStore(reducer)}> 
-      {/* <View style={styles.container}> */}
-        {/* <Home/>
-        <StatusBar style="auto" /> */}
-        <Tabs/>
-      {/* </View> */}
-    </Provider>
-  );
+
+class  App extends Component {
+
+  componentDidMount () {
+    setLocalNotification()
+  }
+  render(){
+
+    return (
+      <Provider store = {createStore(reducer)}> 
+        {/* <View style={styles.container}> */}
+          {/* <Home/>
+          <StatusBar style="auto" /> */}
+          <Tabs/>
+        {/* </View> */}
+      </Provider>
+    )
+  }
 }
 
 const styles = StyleSheet.create({
@@ -31,3 +39,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+
+export default App
